@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { TextField } from '@material-ui/core';
 import { Autocomplete } from '@material-ui/lab';
+import Header from './component/Header.js';
 import './App.css';
 
 const App = () => {
@@ -35,9 +36,11 @@ const App = () => {
     }
   }, [city]);
 
-  return <div>
+  return (
+    <>
+    <Header />
     <Autocomplete
-      className='search'
+      className='Search'
       freeSolo
       options={cities}
       onSelect={e => {
@@ -58,7 +61,8 @@ const App = () => {
     />
     <div hidden={!weather.temperature}>
       <div className='temperature'
-        style={{ color: weather.temperature <= 15 ? 'blue' : 'orangered' }}>
+        //We check if the temperature is <= 15 then we display it in cold color, otherwise in hot color
+        style={{ backgroundColor: (weather.main != "undefined") ? ((weather.temperature <= 15) ? 'LightSkyBlue' : 'orangered') : 'white' }}>
         {weather.temperature}
         <span>&#176;C</span>
       </div>
@@ -68,7 +72,8 @@ const App = () => {
         <img alt='weather icon' src={`https://openweathermap.org/img/wn/${weather.icon}@2x.png`} />
       </div>
     </div>
-  </div>
+    </>
+  )
 }
 
 export default App;
